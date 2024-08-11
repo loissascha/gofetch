@@ -18,6 +18,12 @@ var uptime string
 var artStr []string
 var longestArtLine int
 
+// TODO:
+// - check if config files/folders exist and automatically create them if they don't
+// - check if art and info files exist and automatically create them if they don't (one pre defined art and info file by default)
+// - randomize art and info files
+// - add cli option to define which art and info files to use
+
 func main() {
 	art := getArt()
 	infos := getInfo()
