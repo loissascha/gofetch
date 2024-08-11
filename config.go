@@ -10,7 +10,7 @@ var configDir []fs.DirEntry
 
 func initConfig() {
 	homeDir, _ := os.UserHomeDir()
-	configDirPath = homeDir + "/.config/go-fetch-tool"
+	configDirPath = homeDir + "/.config/gofetch"
 	var err error
 	configDir, err = os.ReadDir(configDirPath)
 	if err != nil {
