@@ -1,3 +1,3 @@
-module go-fetch-tool
+module gofetch
 
 go 1.22.6
