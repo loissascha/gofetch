@@ -62,6 +62,7 @@ func main() {
 
 		// if infos are over, skip to next line
 		if i >= len(infos) {
+			fmt.Print("\033[0m") // clear formatting
 			fmt.Print("\n")
 			continue
 		}
@@ -70,6 +71,7 @@ func main() {
 		info := infos[i]
 		info = fillInfoString(info)
 		fmt.Print(info)
+		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")
 	}
 }
