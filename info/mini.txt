@@ -1,6 +1,0 @@
-\033[1m\033[33m[*user*]@[*hostname*]
-\033[1m[*osName*]
-[*kernelVersion*]
-[*desktopSession*]
-[*cpuModel*]
-[*uptime*]
