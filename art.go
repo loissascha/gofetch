@@ -8,7 +8,7 @@ import (
 
 func getArt() []string {
 	homeDir, _ := os.UserHomeDir()
-	file, err := os.Open(homeDir + "/.config/go-fetch-tool/art/pikachu2.txt")
+	file, err := os.Open(homeDir + "/.config/go-fetch-tool/art/pikachu.txt")
 	if err != nil {
 		fmt.Println("art not found")
 		return []string{}
