@@ -25,6 +25,8 @@ var longestArtLine int
 // - add cli option to define which art and info files to use
 
 func main() {
+	initConfig()
+
 	art := getArt()
 	infos := getInfo()
 
