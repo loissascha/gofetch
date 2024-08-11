@@ -7,7 +7,8 @@ import (
 )
 
 func getInfo() []string {
-	file, err := os.Open("info/mini.txt")
+	homeDir, _ := os.UserHomeDir()
+	file, err := os.Open(homeDir + "/.config/go-fetch-tool/info/mini.txt")
 	if err != nil {
 		fmt.Println("info not found")
 		return []string{}
