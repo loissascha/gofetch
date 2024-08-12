@@ -7,7 +7,7 @@ import (
 	"unicode/utf8"
 )
 
-var systemInfo SystemInfo
+var sysInfo SystemInfo
 
 var artStr []string
 var longestArtLine int
@@ -21,7 +21,7 @@ func main() {
 
 	art := getArt()
 	infos := getInfo()
-	systemInfo = SystemInfo{}
+	sysInfo = SystemInfo{}
 
 	// find longest art line
 	longestArtLine = 0
@@ -62,7 +62,7 @@ func main() {
 
 		fmt.Print("\033[0m")
 		info := infos[i]
-		info = systemInfo.fillInfoString(info)
+		info = sysInfo.fillInfoString(info)
 		fmt.Print(info)
 		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")
