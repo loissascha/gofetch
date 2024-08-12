@@ -23,10 +23,9 @@ func (s *SystemInfo) loadGpuModel() {
 }
 
 func (s *SystemInfo) extractGpuModel(st string) string {
-	runTest := true
 	ss := st
 	res := ""
-	for runTest {
+	for true {
 		_, after, foundStart := strings.Cut(ss, "[")
 		if foundStart {
 			before, end, foundEnd := strings.Cut(after, "]")
@@ -34,11 +33,9 @@ func (s *SystemInfo) extractGpuModel(st string) string {
 				res += before + " "
 				ss = end
 			} else {
-				runTest = false
 				break
 			}
 		} else {
-			runTest = false
 			break
 		}
 	}
