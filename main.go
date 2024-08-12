@@ -23,10 +23,6 @@ func main() {
 	infos := getInfo()
 	systemInfo = SystemInfo{}
 
-	systemInfo.gpuModel = getGpuModel()
-
-	//fmt.Println("GPU model:", systemInfo.gpuModel)
-
 	// find longest art line
 	longestArtLine = 0
 	for _, v := range art {

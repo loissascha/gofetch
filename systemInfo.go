@@ -20,6 +20,20 @@ type SystemInfo struct {
 	uptime             string
 }
 
+func (s *SystemInfo) loadGpuModel() {
+	cmd := exec.Command("sh", "-c", "lspci | grep -i vga | awk -F ': ' '{print $2}'")
+	r, err := cmd.Output()
+	if err != nil {
+		fmt.Println("can't read gpu model")
+		return
+	}
+	st := string(r)
+	st = strings.TrimSpace(st)
+	st = strings.TrimSuffix(st, "\n")
+	s.gpuModel = st
+	return
+}
+
 func (s *SystemInfo) loadDesktopSessionType() {
 	cmd := exec.Command("sh", "-c", "echo $XDG_SESSION_TYPE")
 	r, err := cmd.Output()
