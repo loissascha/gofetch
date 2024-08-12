@@ -3,11 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
 )
 
 func getInfo() []string {
-	file, err := os.Open(configDirPath + "/info/minimal.txt")
+	fname := getRandomInfoFile()
+	file, err := os.Open(configDirPath + "/info/" + fname)
 	if err != nil {
 		fmt.Println("info not found")
 		return []string{}
@@ -23,4 +25,18 @@ func getInfo() []string {
 		result = append(result, l)
 	}
 	return result
+}
+
+func getRandomInfoFile() string {
+	fs, err := os.ReadDir(configDirPath + "/info")
+	if err != nil {
+		fmt.Println("info directory not found")
+		return ""
+	}
+	if len(fs) == 0 {
+		fmt.Println("info directory is empty")
+		return ""
+	}
+	i := rand.Intn(len(fs))
+	return fs[i].Name()
 }
