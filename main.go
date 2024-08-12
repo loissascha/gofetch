@@ -23,15 +23,7 @@ func main() {
 	infos := getInfo()
 	systemInfo = SystemInfo{}
 
-	systemInfo.loadKernelVersion()
-	systemInfo.cpuModel = getCpuModel()
 	systemInfo.gpuModel = getGpuModel()
-	systemInfo.hostname = getHostname()
-	systemInfo.username = getUsername()
-	systemInfo.desktopSession = getDesktopSession()
-	systemInfo.desktopSessionType = getDesktopSessionType()
-	systemInfo.osName = getOsName()
-	systemInfo.uptime = getUptime()
 
 	//fmt.Println("GPU model:", systemInfo.gpuModel)
 
