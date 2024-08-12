@@ -21,6 +21,7 @@ type SystemInfo struct {
 	systemPackages     string
 	flatpakPackages    string
 	snaps              string
+	shell              string
 }
 
 func (s *SystemInfo) FillInfoString(info string) string {
@@ -143,6 +144,12 @@ func (s *SystemInfo) FillInfoString(info string) string {
 			s.loadSnaps()
 		}
 		info = strings.Replace(info, "[*snaps*]", s.snaps, 1)
+	}
+	if strings.Contains(info, "[*shell*]") {
+		if s.shell == "" {
+			s.loadShell()
+		}
+		info = strings.Replace(info, "[*shell*]", s.shell, 1)
 	}
 	return info
 }
