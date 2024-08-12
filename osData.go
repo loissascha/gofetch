@@ -48,7 +48,7 @@ func readOsRelease() map[string]string {
 }
 
 func getKernelVersion() string {
-	execCmd := exec.Command("uname", "-r")
+	execCmd := exec.Command("uname", "-sr")
 	execOut, err := execCmd.Output()
 	if err != nil {
 		fmt.Println("Error getting kernel version: ", err)
@@ -138,6 +138,19 @@ func getDesktopSession() string {
 	r, err := cmd.Output()
 	if err != nil {
 		fmt.Println("can't read desktop session")
+		return ""
+	}
+	s := string(r)
+	s = strings.TrimSpace(s)
+	s = strings.TrimSuffix(s, "\n")
+	return s
+}
+
+func getDesktopSessionType() string {
+	cmd := exec.Command("sh", "-c", "echo $XDG_SESSION_TYPE")
+	r, err := cmd.Output()
+	if err != nil {
+		fmt.Println("can't read desktop session type")
 		return ""
 	}
 	s := string(r)
