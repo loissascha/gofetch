@@ -11,7 +11,8 @@ var kernelVersion string
 var cpuModel string
 var hostname string
 var username string
-var session string
+var desktopSession string
+var desktopSessionType string
 var osName string
 var uptime string
 
@@ -32,7 +33,8 @@ func main() {
 	cpuModel = getCpuModel()
 	hostname = getHostname()
 	username = getUsername()
-	session = getDesktopSession()
+	desktopSession = getDesktopSession()
+	desktopSessionType = getDesktopSessionType()
 	osName = getOsName()
 	uptime = getUptime()
 
@@ -125,7 +127,10 @@ func fillInfoString(info string) string {
 		info = strings.Replace(info, "[*cpuModel*]", cpuModel, 1)
 	}
 	if strings.Contains(info, "[*desktopSession*]") {
-		info = strings.Replace(info, "[*desktopSession*]", session, 1)
+		info = strings.Replace(info, "[*desktopSession*]", desktopSession, 1)
+	}
+	if strings.Contains(info, "[*desktopSessionType*]") {
+		info = strings.Replace(info, "[*desktopSessionType*]", desktopSessionType, 1)
 	}
 	if strings.Contains(info, "[*osName*]") {
 		info = strings.Replace(info, "[*osName*]", osName, 1)

@@ -45,7 +45,7 @@ func createDefaultConfig() {
 	os.WriteFile(infoDirPath+"/minimal.txt", []byte(`\033[1m\033[33m[*user*]@[*hostname*]
 \033[1m[*osName*]
 [*kernelVersion*]
-[*desktopSession*]
+[*desktopSession*] ([*desktopSessionType*])
 [*cpuModel*]
 [*uptime*]`), 0755)
 
