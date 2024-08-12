@@ -47,19 +47,6 @@ func readOsRelease() map[string]string {
 	return config
 }
 
-func getKernelVersion() string {
-	execCmd := exec.Command("uname", "-sr")
-	execOut, err := execCmd.Output()
-	if err != nil {
-		fmt.Println("Error getting kernel version: ", err)
-		return ""
-	}
-	k := string(execOut)
-	k = strings.TrimSpace(k)
-	k = strings.TrimSuffix(k, "\n")
-	return k
-}
-
 func getUptime() string {
 	execCmd := exec.Command("uptime", "-p")
 	execOut, err := execCmd.Output()

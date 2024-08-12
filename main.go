@@ -23,7 +23,7 @@ func main() {
 	infos := getInfo()
 	systemInfo = SystemInfo{}
 
-	systemInfo.kernelVersion = getKernelVersion()
+	systemInfo.loadKernelVersion()
 	systemInfo.cpuModel = getCpuModel()
 	systemInfo.gpuModel = getGpuModel()
 	systemInfo.hostname = getHostname()
@@ -74,7 +74,7 @@ func main() {
 
 		fmt.Print("\033[0m")
 		info := infos[i]
-		info = fillInfoString(info)
+		info = systemInfo.fillInfoString(info)
 		fmt.Print(info)
 		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")
@@ -105,35 +105,4 @@ func removeFormattingFromString(s string) string {
 	}
 	re := regexp.MustCompile(`\x1b\[[0-9;]*[a-zA-Z]`)
 	return re.ReplaceAllString(s, "")
-}
-
-func fillInfoString(info string) string {
-	if strings.Contains(info, "\\033") {
-		info = strings.Replace(info, "\\033", "\033", 100)
-	}
-	if strings.Contains(info, "[*user*]") {
-		info = strings.Replace(info, "[*user*]", systemInfo.username, 1)
-	}
-	if strings.Contains(info, "[*hostname*]") {
-		info = strings.Replace(info, "[*hostname*]", systemInfo.hostname, 1)
-	}
-	if strings.Contains(info, "[*kernelVersion*]") {
-		info = strings.Replace(info, "[*kernelVersion*]", systemInfo.kernelVersion, 1)
-	}
-	if strings.Contains(info, "[*cpuModel*]") {
-		info = strings.Replace(info, "[*cpuModel*]", systemInfo.cpuModel, 1)
-	}
-	if strings.Contains(info, "[*desktopSession*]") {
-		info = strings.Replace(info, "[*desktopSession*]", systemInfo.desktopSession, 1)
-	}
-	if strings.Contains(info, "[*desktopSessionType*]") {
-		info = strings.Replace(info, "[*desktopSessionType*]", systemInfo.desktopSessionType, 1)
-	}
-	if strings.Contains(info, "[*osName*]") {
-		info = strings.Replace(info, "[*osName*]", systemInfo.osName, 1)
-	}
-	if strings.Contains(info, "[*uptime*]") {
-		info = strings.Replace(info, "[*uptime*]", systemInfo.uptime, 1)
-	}
-	return info
 }
