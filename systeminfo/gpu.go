@@ -41,6 +41,13 @@ func (s *SystemInfo) extractGpuModel(st string) string {
 	}
 	if res == "" {
 		res = st
+	} else {
+		if strings.Contains(strings.ToLower(st), "nvidia") {
+			if !strings.Contains(strings.ToLower(res), "nvidia") {
+				res = "Nvidia " + res
+			}
+		}
 	}
-	return res
+
+	return strings.TrimSpace(res)
 }
