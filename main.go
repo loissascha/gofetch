@@ -7,14 +7,7 @@ import (
 	"unicode/utf8"
 )
 
-var kernelVersion string
-var cpuModel string
-var hostname string
-var username string
-var desktopSession string
-var desktopSessionType string
-var osName string
-var uptime string
+var systemInfo SystemInfo
 
 var artStr []string
 var longestArtLine int
@@ -28,15 +21,19 @@ func main() {
 
 	art := getArt()
 	infos := getInfo()
+	systemInfo = SystemInfo{}
 
-	kernelVersion = getKernelVersion()
-	cpuModel = getCpuModel()
-	hostname = getHostname()
-	username = getUsername()
-	desktopSession = getDesktopSession()
-	desktopSessionType = getDesktopSessionType()
-	osName = getOsName()
-	uptime = getUptime()
+	systemInfo.kernelVersion = getKernelVersion()
+	systemInfo.cpuModel = getCpuModel()
+	systemInfo.gpuModel = getGpuModel()
+	systemInfo.hostname = getHostname()
+	systemInfo.username = getUsername()
+	systemInfo.desktopSession = getDesktopSession()
+	systemInfo.desktopSessionType = getDesktopSessionType()
+	systemInfo.osName = getOsName()
+	systemInfo.uptime = getUptime()
+
+	//fmt.Println("GPU model:", systemInfo.gpuModel)
 
 	// find longest art line
 	longestArtLine = 0
@@ -115,28 +112,28 @@ func fillInfoString(info string) string {
 		info = strings.Replace(info, "\\033", "\033", 100)
 	}
 	if strings.Contains(info, "[*user*]") {
-		info = strings.Replace(info, "[*user*]", username, 1)
+		info = strings.Replace(info, "[*user*]", systemInfo.username, 1)
 	}
 	if strings.Contains(info, "[*hostname*]") {
-		info = strings.Replace(info, "[*hostname*]", hostname, 1)
+		info = strings.Replace(info, "[*hostname*]", systemInfo.hostname, 1)
 	}
 	if strings.Contains(info, "[*kernelVersion*]") {
-		info = strings.Replace(info, "[*kernelVersion*]", kernelVersion, 1)
+		info = strings.Replace(info, "[*kernelVersion*]", systemInfo.kernelVersion, 1)
 	}
 	if strings.Contains(info, "[*cpuModel*]") {
-		info = strings.Replace(info, "[*cpuModel*]", cpuModel, 1)
+		info = strings.Replace(info, "[*cpuModel*]", systemInfo.cpuModel, 1)
 	}
 	if strings.Contains(info, "[*desktopSession*]") {
-		info = strings.Replace(info, "[*desktopSession*]", desktopSession, 1)
+		info = strings.Replace(info, "[*desktopSession*]", systemInfo.desktopSession, 1)
 	}
 	if strings.Contains(info, "[*desktopSessionType*]") {
-		info = strings.Replace(info, "[*desktopSessionType*]", desktopSessionType, 1)
+		info = strings.Replace(info, "[*desktopSessionType*]", systemInfo.desktopSessionType, 1)
 	}
 	if strings.Contains(info, "[*osName*]") {
-		info = strings.Replace(info, "[*osName*]", osName, 1)
+		info = strings.Replace(info, "[*osName*]", systemInfo.osName, 1)
 	}
 	if strings.Contains(info, "[*uptime*]") {
-		info = strings.Replace(info, "[*uptime*]", uptime, 1)
+		info = strings.Replace(info, "[*uptime*]", systemInfo.uptime, 1)
 	}
 	return info
 }
