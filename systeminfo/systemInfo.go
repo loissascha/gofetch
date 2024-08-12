@@ -1,6 +1,7 @@
 package systeminfo
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -14,6 +15,9 @@ type SystemInfo struct {
 	desktopSessionType string
 	osName             string
 	uptime             string
+	memTotal           uint64
+	memFree            uint64
+	memUsed            uint64
 }
 
 func (s *SystemInfo) FillInfoString(info string) string {
@@ -67,6 +71,30 @@ func (s *SystemInfo) FillInfoString(info string) string {
 			s.loadOsName()
 		}
 		info = strings.Replace(info, "[*osName*]", s.osName, 1)
+	}
+	if strings.Contains(info, "[*memUsed*]") {
+		if s.memTotal == 0 {
+			s.loadMemInfo()
+		}
+		var memfloat float64 = float64(s.memUsed)
+		memfloat = memfloat / 1000000
+		info = strings.Replace(info, "[*memUsed*]", fmt.Sprintf("%.2f", memfloat), 1)
+	}
+	if strings.Contains(info, "[*memFree*]") {
+		if s.memTotal == 0 {
+			s.loadMemInfo()
+		}
+		var memfloat float64 = float64(s.memFree)
+		memfloat = memfloat / 1000000
+		info = strings.Replace(info, "[*memFree*]", fmt.Sprintf("%.2f", memfloat), 1)
+	}
+	if strings.Contains(info, "[*memTotal*]") {
+		if s.memTotal == 0 {
+			s.loadMemInfo()
+		}
+		var memfloat float64 = float64(s.memTotal)
+		memfloat = memfloat / 1000000
+		info = strings.Replace(info, "[*memTotal*]", fmt.Sprintf("%.2f", memfloat), 1)
 	}
 	if strings.Contains(info, "[*uptime*]") {
 		if s.uptime == "" {

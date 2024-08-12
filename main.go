@@ -24,6 +24,9 @@ func main() {
 	infos := getInfo()
 	sysInfo = systeminfo.SystemInfo{}
 
+	// ram, _ := sysInfo.ReadMemInfo()
+	// fmt.Println(ram)
+
 	// find longest art line
 	longestArtLine = 0
 	for _, v := range art {
