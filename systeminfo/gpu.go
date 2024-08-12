@@ -28,10 +28,10 @@ func (s *SystemInfo) extractGpuModel(st string) string {
 	for true {
 		_, after, foundStart := strings.Cut(ss, "[")
 		if foundStart {
-			before, end, foundEnd := strings.Cut(after, "]")
+			before, remainingStr, foundEnd := strings.Cut(after, "]")
 			if foundEnd {
 				res += before + " "
-				ss = end
+				ss = remainingStr
 			} else {
 				break
 			}
