@@ -42,11 +42,12 @@ func createDefaultConfig() {
 \033[30m░░\033[33m█\033[30m░░\033[33m▄▀\033[30m░░\033[33m█\033[30m░░░░\033[33m▀██▀\033[30m░░░░\033[33m▀▀\033[30m░\033[33m▀▀\033[30m░░\033[33m▄▀
 \033[30m░\033[33m█\033[30m░░░\033[33m█\033[30m░░\033[33m█\033[30m░░░░░░\033[33m▄▄\033[30m░░░░░░░░░░░\033[33m▄▀ `), 0755)
 
-	os.WriteFile(infoDirPath+"/minimal.txt", []byte(`\033[1m\033[33m[*user*]@[*hostname*]
+	os.WriteFile(infoDirPath+"/minimal.txt", []byte(`\033[1m[*user*]@[*hostname*]
 \033[1m[*osName*]
 [*kernelVersion*]
 [*desktopSession*] ([*desktopSessionType*])
 [*cpuModel*]
+[*gpuModel*]
 [*uptime*]`), 0755)
 
 }
