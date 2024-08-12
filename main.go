@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"gofetch/systeminfo"
 	"regexp"
 	"strings"
 	"unicode/utf8"
 )
 
-var sysInfo SystemInfo
+var sysInfo systeminfo.SystemInfo
 
 var artStr []string
 var longestArtLine int
@@ -21,7 +22,7 @@ func main() {
 
 	art := getArt()
 	infos := getInfo()
-	sysInfo = SystemInfo{}
+	sysInfo = systeminfo.SystemInfo{}
 
 	// find longest art line
 	longestArtLine = 0
@@ -62,7 +63,7 @@ func main() {
 
 		fmt.Print("\033[0m")
 		info := infos[i]
-		info = sysInfo.fillInfoString(info)
+		info = sysInfo.FillInfoString(info)
 		fmt.Print(info)
 		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")

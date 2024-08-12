@@ -1,4 +1,4 @@
-package main
+package systeminfo
 
 import (
 	"bufio"
@@ -18,20 +18,6 @@ type SystemInfo struct {
 	desktopSessionType string
 	osName             string
 	uptime             string
-}
-
-func (s *SystemInfo) loadGpuModel() {
-	cmd := exec.Command("sh", "-c", "lspci | grep -i vga | awk -F ': ' '{print $2}'")
-	r, err := cmd.Output()
-	if err != nil {
-		fmt.Println("can't read gpu model")
-		return
-	}
-	st := string(r)
-	st = strings.TrimSpace(st)
-	st = strings.TrimSuffix(st, "\n")
-	s.gpuModel = st
-	return
 }
 
 func (s *SystemInfo) loadDesktopSessionType() {
@@ -190,7 +176,7 @@ func (s *SystemInfo) loadKernelVersion() {
 	s.kernelVersion = k
 }
 
-func (s *SystemInfo) fillInfoString(info string) string {
+func (s *SystemInfo) FillInfoString(info string) string {
 	if strings.Contains(info, "\\033") {
 		info = strings.Replace(info, "\\033", "\033", 100)
 	}
@@ -217,6 +203,12 @@ func (s *SystemInfo) fillInfoString(info string) string {
 			s.loadCpuModel()
 		}
 		info = strings.Replace(info, "[*cpuModel*]", s.cpuModel, 1)
+	}
+	if strings.Contains(info, "[*gpuModel*]") {
+		if s.gpuModel == "" {
+			s.loadGpuModel()
+		}
+		info = strings.Replace(info, "[*gpuModel*]", s.gpuModel, 1)
 	}
 	if strings.Contains(info, "[*desktopSession*]") {
 		if s.desktopSession == "" {
