@@ -80,6 +80,27 @@ func (s *SystemInfo) FillInfoString(info string) string {
 		memfloat = memfloat / 1000000
 		info = strings.Replace(info, "[*memUsed*]", fmt.Sprintf("%.2f", memfloat), 1)
 	}
+	if strings.Contains(info, "[*memUsedPercent*]") {
+		if s.memTotal == 0 {
+			s.loadMemInfo()
+		}
+		var usedPercent float64 = (100 / float64(s.memTotal)) * float64(s.memUsed)
+		info = strings.Replace(info, "[*memUsedPercent*]", fmt.Sprintf("%.0f", usedPercent), 1)
+	}
+	if strings.Contains(info, "[*memUsedPercentColored*]") {
+		if s.memTotal == 0 {
+			s.loadMemInfo()
+		}
+		usedPercent := (100 / float64(s.memTotal)) * float64(s.memUsed)
+		color := "\033[32m"
+		if usedPercent >= 50 {
+			color = "\033[33m"
+		}
+		if usedPercent >= 80 {
+			color = "\033[31m"
+		}
+		info = strings.Replace(info, "[*memUsedPercentColored*]", fmt.Sprintf("%v%.0f%v%v", color, usedPercent, "%", "\033[0m"), 1)
+	}
 	if strings.Contains(info, "[*memFree*]") {
 		if s.memTotal == 0 {
 			s.loadMemInfo()
