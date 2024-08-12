@@ -18,6 +18,9 @@ type SystemInfo struct {
 	memTotal           uint64
 	memFree            uint64
 	memUsed            uint64
+	systemPackages     string
+	flatpakPackages    string
+	snaps              string
 }
 
 func (s *SystemInfo) FillInfoString(info string) string {
@@ -122,6 +125,24 @@ func (s *SystemInfo) FillInfoString(info string) string {
 			s.loadUptime()
 		}
 		info = strings.Replace(info, "[*uptime*]", s.uptime, 1)
+	}
+	if strings.Contains(info, "[*packages*]") {
+		if s.systemPackages == "" {
+			s.loadSystemPackages()
+		}
+		info = strings.Replace(info, "[*packages*]", s.systemPackages, 1)
+	}
+	if strings.Contains(info, "[*flatpakPackages*]") {
+		if s.flatpakPackages == "" {
+			s.loadFlatpakPackages()
+		}
+		info = strings.Replace(info, "[*flatpakPackages*]", s.flatpakPackages, 1)
+	}
+	if strings.Contains(info, "[*snaps*]") {
+		if s.snaps == "" {
+			s.loadSnaps()
+		}
+		info = strings.Replace(info, "[*snaps*]", s.snaps, 1)
 	}
 	return info
 }
