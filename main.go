@@ -15,7 +15,6 @@ var artStr []string
 var longestArtLine int
 
 func main() {
-
 	var artFile string
 	var infoFile string
 
@@ -29,6 +28,7 @@ func main() {
 	art := getArt(artFile)
 	infos := getInfo(infoFile)
 	sysInfo = systeminfo.SystemInfo{}
+	sysInfo.LoadAllData()
 
 	// find longest art line
 	longestArtLine = 0
