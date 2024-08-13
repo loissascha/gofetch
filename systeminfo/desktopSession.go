@@ -21,7 +21,7 @@ func (s *SystemInfo) loadDesktopSessionType() {
 }
 
 func (s *SystemInfo) loadDesktopSession() {
-	cmd := exec.Command("sh", "-c", "echo $XDG_CURRENT_DESKTOP")
+	cmd := exec.Command("sh", "-c", "echo $XDG_SESSION_DESKTOP")
 	r, err := cmd.Output()
 	if err != nil {
 		fmt.Println("can't read desktop session")
@@ -33,7 +33,7 @@ func (s *SystemInfo) loadDesktopSession() {
 
 	// try with alternate var
 	if st == "" {
-		cmd := exec.Command("sh", "-c", "echo $XDG_SESSION_DESKTOP")
+		cmd := exec.Command("sh", "-c", "echo $XDG_CURRENT_DESKTOP")
 		r, err := cmd.Output()
 		if err != nil {
 			fmt.Println("can't read desktop session")
