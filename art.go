@@ -7,8 +7,13 @@ import (
 	"os"
 )
 
-func getArt() []string {
-	fname := getRandomArtFile()
+func getArt(artFile string) []string {
+	fname := ""
+	if artFile != "" {
+		fname = artFile + ".txt"
+	} else {
+		fname = getRandomArtFile()
+	}
 	file, err := os.Open(configDirPath + "/art/" + fname)
 	if err != nil {
 		fmt.Println("art not found")

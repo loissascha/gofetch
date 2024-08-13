@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"gofetch/systeminfo"
 	"regexp"
@@ -13,19 +14,21 @@ var sysInfo systeminfo.SystemInfo
 var artStr []string
 var longestArtLine int
 
-// TODO:
-// - randomize art and info files
-// - add cli option to define which art and info files to use
-
 func main() {
+
+	var artFile string
+	var infoFile string
+
+	flag.StringVar(&artFile, "art", "", "Name  of your art file")
+	flag.StringVar(&infoFile, "info", "", "Name  of your info file")
+
+	flag.Parse()
+
 	initConfig()
 
-	art := getArt()
-	infos := getInfo()
+	art := getArt(artFile)
+	infos := getInfo(infoFile)
 	sysInfo = systeminfo.SystemInfo{}
-
-	// ram, _ := sysInfo.ReadMemInfo()
-	// fmt.Println(ram)
 
 	// find longest art line
 	longestArtLine = 0

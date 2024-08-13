@@ -7,8 +7,13 @@ import (
 	"os"
 )
 
-func getInfo() []string {
-	fname := getRandomInfoFile()
+func getInfo(infoFile string) []string {
+	fname := ""
+	if infoFile != "" {
+		fname = infoFile + ".txt"
+	} else {
+		fname = getRandomInfoFile()
+	}
 	file, err := os.Open(configDirPath + "/info/" + fname)
 	if err != nil {
 		fmt.Println("info not found")
