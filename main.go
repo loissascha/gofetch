@@ -6,15 +6,17 @@ import (
 	"gofetch/systeminfo"
 	"regexp"
 	"strings"
+	"sync"
+	"time"
 	"unicode/utf8"
 )
 
 var sysInfo systeminfo.SystemInfo
 
 var artStr []string
-var longestArtLine int
 
 func main() {
+	startTime := time.Now()
 	var artFile string
 	var infoFile string
 
@@ -31,20 +33,13 @@ func main() {
 	sysInfo.LoadAllData()
 
 	// find longest art line
-	longestArtLine = 0
-	for _, v := range art {
-		l := removeFormattingFromString(v)
-		ln := utf8.RuneCountInString(l)
-		if ln > longestArtLine {
-			longestArtLine = ln
-		}
-	}
-	longestArtLine += 2
+	minIndentLength := getLongestLineLength(art)
+	minIndentLength += 2
 
 	artStr = []string{}
 	for _, v := range art {
 		l := v
-		for i := utf8.RuneCountInString(removeFormattingFromString(v)); i < longestArtLine; i++ {
+		for i := utf8.RuneCountInString(removeFormattingFromString(v)); i < minIndentLength; i++ {
 			l += " "
 		}
 		artStr = append(artStr, l)
@@ -58,7 +53,7 @@ func main() {
 	for i := 0; i < maxIndex; i++ {
 		fmt.Print("\033[0m") // clear formatting
 
-		fmt.Print(getArtLine(i))
+		fmt.Print(getArtLine(i, minIndentLength))
 
 		// if infos are over, skip to next line
 		if i >= len(infos) {
@@ -74,9 +69,10 @@ func main() {
 		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")
 	}
+	fmt.Println("Time:", time.Since(startTime))
 }
 
-func getArtLine(i int) string {
+func getArtLine(i int, minLineLength int) string {
 	l := ""
 	if i < len(artStr) {
 		o := artStr[i]
@@ -86,7 +82,7 @@ func getArtLine(i int) string {
 		l = o
 	} else {
 		empty := ""
-		for u := 0; u < longestArtLine; u++ {
+		for u := 0; u < minLineLength; u++ {
 			empty += " "
 		}
 		l = empty
@@ -100,4 +96,24 @@ func removeFormattingFromString(s string) string {
 	}
 	re := regexp.MustCompile(`\x1b\[[0-9;]*[a-zA-Z]`)
 	return re.ReplaceAllString(s, "")
+}
+
+func getLongestLineLength(str []string) int {
+	longestLine := 0
+	var wg sync.WaitGroup
+	for _, v := range str {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			l := removeFormattingFromString(v)
+			ln := utf8.RuneCountInString(l)
+			if ln > longestLine {
+				longestLine = ln
+			}
+		}()
+	}
+	func() {
+		wg.Wait()
+	}()
+	return longestLine
 }
