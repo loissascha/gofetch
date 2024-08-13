@@ -30,6 +30,19 @@ func (s *SystemInfo) loadDesktopSession() {
 	st := string(r)
 	st = strings.TrimSpace(st)
 	st = strings.TrimSuffix(st, "\n")
+
+	// try with alternate var
+	if st == "" {
+		cmd := exec.Command("sh", "-c", "echo $XDG_SESSION_DESKTOP")
+		r, err := cmd.Output()
+		if err != nil {
+			fmt.Println("can't read desktop session")
+			return
+		}
+		st = string(r)
+		st = strings.TrimSpace(st)
+		st = strings.TrimSuffix(st, "\n")
+	}
 	s.desktopSession = st
 	return
 }
