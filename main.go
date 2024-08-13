@@ -16,7 +16,6 @@ var sysInfo systeminfo.SystemInfo
 var artStr []string
 
 func main() {
-	startTime := time.Now()
 	var artFile string
 	var infoFile string
 
@@ -69,7 +68,6 @@ func main() {
 		fmt.Print("\033[0m") // clear formatting
 		fmt.Print("\n")
 	}
-	fmt.Println("Time:", time.Since(startTime))
 }
 
 func getArtLine(i int, minLineLength int) string {
