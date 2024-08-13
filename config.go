@@ -48,6 +48,8 @@ func createDefaultConfig() {
 [*desktopSession*] ([*desktopSessionType*])
 [*cpuModel*]
 [*gpuModel*]
+[*memUsed*] GB / [*memTotal*] GB ([*memUsedPercentColored*])
+[*packages*] [*flatpakPackages*] [*snaps*]
 [*uptime*]`), 0755)
 
 }
