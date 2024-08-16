@@ -132,10 +132,18 @@ func (s *SystemInfo) FillInfoString(info string) string {
 		info = strings.Replace(info, "[*kernelVersion*]", s.kernelVersion, 1)
 	}
 	if strings.Contains(info, "[*cpuModel*]") {
-		info = strings.Replace(info, "[*cpuModel*]", s.cpuModel, 1)
+		if s.cpuModel == "" {
+			info = strings.Replace(info, "[*cpuModel*]", "Unknown", 1)
+		} else {
+			info = strings.Replace(info, "[*cpuModel*]", s.cpuModel, 1)
+		}
 	}
 	if strings.Contains(info, "[*gpuModel*]") {
-		info = strings.Replace(info, "[*gpuModel*]", s.gpuModel, 1)
+		if s.gpuModel == "" {
+			info = strings.Replace(info, "[*gpuModel*]", "Unknown", 1)
+		} else {
+			info = strings.Replace(info, "[*gpuModel*]", s.gpuModel, 1)
+		}
 	}
 	if strings.Contains(info, "[*desktopSession*]") {
 		info = strings.Replace(info, "[*desktopSession*]", s.desktopSession, 1)
