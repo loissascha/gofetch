@@ -16,6 +16,7 @@ func (s *SystemInfo) loadCpuModel() {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
+	modelName := ""
 	for scanner.Scan() {
 		line := scanner.Text()
 
@@ -28,9 +29,15 @@ func (s *SystemInfo) loadCpuModel() {
 		key := strings.TrimSpace(parts[0])
 		value := strings.TrimSpace(parts[1])
 
+		if key == "Model" {
+			modelName = value
+		}
+
 		if key == "model name" {
 			s.cpuModel = value
 			return
 		}
 	}
+
+	s.cpuModel = modelName
 }
