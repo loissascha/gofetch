@@ -7,7 +7,7 @@ import (
 )
 
 func (s *SystemInfo) loadKernelVersion() {
-	execCmd := exec.Command("uname", "-sr")
+	execCmd := exec.Command("uname", "-msr")
 	execOut, err := execCmd.Output()
 	if err != nil {
 		fmt.Println("Error getting kernel version: ", err)
