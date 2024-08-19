@@ -16,5 +16,7 @@ func (s *SystemInfo) loadUptime() {
 	u := string(execOut)
 	u = strings.TrimSpace(u)
 	u = strings.TrimSuffix(u, "\n")
+	u = strings.TrimPrefix(u, "up")
+	u = strings.TrimSpace(u)
 	s.uptime = u
 }
