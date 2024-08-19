@@ -3,33 +3,52 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"gofetch/systeminfo"
 	"math/rand"
 	"os"
 )
 
-func getArt(artFile string) []string {
+func getArt(artFile string, width int, longestInfoLine int, sysInfo *systeminfo.SystemInfo) []string {
 	fname := ""
+	randomFile := true
 	if artFile != "" {
 		fname = artFile + ".txt"
-	} else {
-		fname = getRandomArtFile()
+		randomFile = false
 	}
-	file, err := os.Open(configDirPath + "/art/" + fname)
-	if err != nil {
-		fmt.Println("art not found")
-		return []string{}
-	}
-	defer file.Close()
+	tries := 0
+	for true {
+		tries++
+		if randomFile {
+			fname = getRandomArtFile()
+		}
+		file, err := os.Open(configDirPath + "/art/" + fname)
+		if err != nil {
+			fmt.Println("art not found")
+			return []string{}
+		}
+		defer file.Close()
 
-	result := []string{}
+		result := []string{}
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		l := string(line)
-		result = append(result, l)
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			line := scanner.Text()
+			l := string(line)
+			result = append(result, l)
+		}
+
+		if randomFile {
+			longestLine := getLongestLineLength(result, sysInfo)
+			if longestLine > (width - longestInfoLine - 2) {
+				if tries >= 100 {
+					break
+				}
+				continue
+			}
+		}
+		return result
 	}
-	return result
+	return []string{}
 }
 
 func getRandomArtFile() string {

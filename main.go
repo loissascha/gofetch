@@ -15,6 +15,8 @@ var sysInfo systeminfo.SystemInfo
 var artStr []string
 
 func main() {
+	width, _ := getConsoleSize() // TODO check if max width with art and info fits in the current console window
+
 	var artFile string
 	var infoFile string
 
@@ -24,14 +26,18 @@ func main() {
 	flag.Parse()
 
 	initConfig()
-
-	art := getArt(artFile)
-	infos := getInfo(infoFile)
 	sysInfo = systeminfo.SystemInfo{}
 	sysInfo.LoadAllData()
 
+	infos := getInfo(infoFile)
+	longestInfosLine := getLongestLineLength(infos, &sysInfo)
+	// if longestInfosLine > width {
+	// 	longestInfosLine = 0
+	// }
+	art := getArt(artFile, width, longestInfosLine, &sysInfo)
+
 	// find longest art line
-	minIndentLength := getLongestLineLength(art)
+	minIndentLength := getLongestLineLength(art, &sysInfo)
 	minIndentLength += 2
 
 	artStr = []string{}
@@ -95,7 +101,7 @@ func removeFormattingFromString(s string) string {
 	return re.ReplaceAllString(s, "")
 }
 
-func getLongestLineLength(str []string) int {
+func getLongestLineLength(str []string, sysInfo *systeminfo.SystemInfo) int {
 	longestLine := 0
 	var wg sync.WaitGroup
 	for _, v := range str {
@@ -103,6 +109,8 @@ func getLongestLineLength(str []string) int {
 		go func() {
 			defer wg.Done()
 			l := removeFormattingFromString(v)
+			l = sysInfo.FillInfoString(l)
+
 			ln := utf8.RuneCountInString(l)
 			if ln > longestLine {
 				longestLine = ln
