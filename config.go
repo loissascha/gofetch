@@ -43,13 +43,14 @@ func createDefaultConfig() {
 \033[30m░\033[33m█\033[30m░░░\033[33m█\033[30m░░\033[33m█\033[30m░░░░░░\033[33m▄▄\033[30m░░░░░░░░░░░\033[33m▄▀ `), 0755)
 
 	os.WriteFile(infoDirPath+"/minimal.txt", []byte(`\033[1m[*user*]@[*hostname*]
-\033[1m[*osName*]
-[*kernelVersion*]
-[*desktopSession*] ([*desktopSessionType*])
-[*cpuModel*]
-[*gpuModel*]
-[*memUsed*] GB / [*memTotal*] GB ([*memUsedPercentColored*])
-[*packages*] [*flatpakPackages*] [*snaps*]
-[*uptime*]`), 0755)
+\033[1m\033[32mOS:\033[0m [*osName*]
+\033[1m\033[33mKernel:\033[0m [*kernelVersion*]
+\033[1m\033[34mWM:\033[0m [*desktopSession*] ([*desktopSessionType*])
+\033[1m\033[31mCPU:\033[0m [*cpuModel*]
+\033[1m\033[36mGPU:\033[0m [*gpuModel*]
+\033[1m\033[32mMemory:\033[0m [*memUsed*] GB / [*memTotal*] GB ([*memUsedPercentColored*])
+\033[1m\033[33mPackages:\033[0m [*packages*] [*flatpakPackages*] [*snaps*]
+\033[1m\033[34mUptime:\033[0m [*uptime*]
+`), 0755)
 
 }
