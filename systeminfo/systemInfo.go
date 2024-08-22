@@ -56,7 +56,8 @@ func (s *SystemInfo) LoadAllData() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		s.loadFlatpakPackages()
+		//s.loadFlatpakPackages()
+		s.loadFlatpakPackagesv2()
 	}()
 
 	wg.Add(1)
