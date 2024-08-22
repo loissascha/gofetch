@@ -2,6 +2,7 @@ package systeminfo
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -42,7 +43,8 @@ func (s *SystemInfo) loadSystemPackages() {
 
 func (s *SystemInfo) loadFlatpakPackages() {
 	if commandExists("flatpak") {
-		cmd := exec.Command("sh", "-c", "flatpak list | wc -l")
+		cmd := exec.Command("sh", "-c", "find /var/lib/flatpak/app -mindepth 1 -maxdepth 1 -type d | wc -l")
+		//cmd := exec.Command("sh", "-c", "flatpak list | wc -l")
 		execOut, err := cmd.Output()
 		if err != nil {
 			fmt.Println("Error loading flatpak packages")
@@ -53,6 +55,17 @@ func (s *SystemInfo) loadFlatpakPackages() {
 		r = strings.TrimSuffix(r, "\n")
 		s.flatpakPackages = "(" + r + ") " + "flatpaks"
 	}
+}
+
+func (s *SystemInfo) loadFlatpakPackagesv2() {
+	dir, err := os.ReadDir("/var/lib/flatpak/app")
+	if err != nil {
+		s.flatpakPackages = ""
+		return
+	}
+	count := len(dir)
+	r := fmt.Sprintf("%v", count)
+	s.flatpakPackages = "(" + r + ") flatpaks"
 }
 
 func (s *SystemInfo) loadSnaps() {
