@@ -9,11 +9,11 @@ import (
 
 func (s *SystemInfo) loadSystemPackages() {
 	var cmd *exec.Cmd
-	pkgManager := "dpkg"
+	pkgManager := "pacman"
 	if !commandExists(pkgManager) {
 		pkgManager = "rpm"
 		if !commandExists(pkgManager) {
-			pkgManager = "pacman"
+			pkgManager = "dpkg"
 			if !commandExists(pkgManager) {
 				fmt.Println("No package manager found")
 				return
