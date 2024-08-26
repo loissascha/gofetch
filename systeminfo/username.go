@@ -17,5 +17,4 @@ func (s *SystemInfo) loadUsername() {
 	user = strings.TrimSpace(user)
 	user = strings.TrimSuffix(user, "\n")
 	s.username = user
-	return
 }
