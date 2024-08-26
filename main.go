@@ -15,7 +15,7 @@ var sysInfo systeminfo.SystemInfo
 var artStr []string
 
 func main() {
-	width, _ := getConsoleSize() // TODO check if max width with art and info fits in the current console window
+	width, _ := getConsoleSize()
 
 	var artFile string
 	var infoFile string
