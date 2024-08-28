@@ -20,8 +20,8 @@ func main() {
 	var artFile string
 	var infoFile string
 
-	flag.StringVar(&artFile, "art", "", "Name  of your art file")
-	flag.StringVar(&infoFile, "info", "", "Name  of your info file")
+	flag.StringVar(&artFile, "art", "", "Name of your art file")
+	flag.StringVar(&infoFile, "info", "", "Name of your info file")
 
 	flag.Parse()
 
