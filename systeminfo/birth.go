@@ -26,8 +26,4 @@ func (s *SystemInfo) loadBirth() {
 		}
 
 	}
-	// k := string(execOut)
-	// k = strings.TrimSpace(k)
-	// k = strings.TrimSuffix(k, "\n")
-	// s.birth = k
 }
