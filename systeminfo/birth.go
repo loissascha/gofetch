@@ -16,7 +16,6 @@ func (s *SystemInfo) loadBirth() {
 	n := string(execOut)
 	split := strings.Split(n, "\n")
 	for _, v := range split {
-		fmt.Println(v)
 		if strings.Contains(v, "Birth:") {
 			b := strings.TrimSpace(v)
 			b = strings.TrimPrefix(b, "Birth:")
