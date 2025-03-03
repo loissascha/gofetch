@@ -16,6 +16,7 @@ type SystemInfo struct {
 	desktopSessionType string
 	osName             string
 	uptime             string
+	birth              string
 	memTotal           uint64
 	memFree            uint64
 	memUsed            uint64
@@ -28,6 +29,12 @@ type SystemInfo struct {
 func (s *SystemInfo) LoadAllData() {
 
 	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		s.loadBirth()
+	}()
 
 	wg.Add(1)
 	go func() {
@@ -187,6 +194,9 @@ func (s *SystemInfo) FillInfoString(info string) string {
 	}
 	if strings.Contains(info, "[*uptime*]") {
 		info = strings.Replace(info, "[*uptime*]", s.uptime, 1)
+	}
+	if strings.Contains(info, "[*birth*]") {
+		info = strings.Replace(info, "[*birth*]", s.birth, 1)
 	}
 	if strings.Contains(info, "[*packages*]") {
 		info = strings.Replace(info, "[*packages*]", s.systemPackages, 1)
