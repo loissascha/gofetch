@@ -7,4 +7,4 @@
 \033[1m\033[32mMemory:\033[0m [*memUsed*] GB / [*memTotal*] GB ([*memUsedPercentColored*])
 \033[1m\033[33mPackages:\033[0m [*packages*] [*flatpakPackages*] [*snaps*]
 \033[1m\033[34mUptime:\033[0m [*uptime*]
-\033[1m\033[35mBirth:\033[0m [*birth*]
+\033[1m\033[35mSystem Age:\033[0m [*birth*]
