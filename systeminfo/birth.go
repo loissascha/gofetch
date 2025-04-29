@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 func (s *SystemInfo) loadBirth() {
@@ -15,14 +16,24 @@ func (s *SystemInfo) loadBirth() {
 	}
 	n := string(execOut)
 	split := strings.Split(n, "\n")
+	layout := "2006-01-02 15:04:05"
 	for _, v := range split {
 		if strings.Contains(v, "Birth:") {
-			b := strings.TrimSpace(v)
-			b = strings.TrimPrefix(b, "Birth:")
-			b = strings.TrimSpace(b)
-			bd := strings.Split(b, " ")
-			bt := strings.Split(bd[1], ".")[0]
-			s.birth = fmt.Sprintf("%s %s", bd[0], bt)
+			birthStr := strings.TrimSpace(v)
+			birthStr = strings.TrimPrefix(birthStr, "Birth:")
+			birthStr = strings.TrimSpace(birthStr)
+			birthDate := strings.Split(birthStr, " ")
+			birthTime := strings.Split(birthDate[1], ".")[0]
+			timestr := fmt.Sprintf("%s %s", birthDate[0], birthTime)
+			parsedTime, err := time.Parse(layout, timestr)
+			if err != nil {
+				s.birth = "How unfortunate... your time string is malformed."
+				return
+			}
+			now := time.Now()
+			duration := now.Sub(parsedTime)
+			days := int(duration.Hours() / 24)
+			s.birth = fmt.Sprintf("%v days", days)
 		}
 
 	}
